@@ -19,8 +19,10 @@
     }
 
     header {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -65,10 +67,36 @@
 
     #content {
       flex: 1;
+      margin-top: 80px;
+      margin-bottom: 60px;
       overflow-y: auto;
       padding: 1.5rem;
       box-sizing: border-box;
-      min-height: 0; /* necessary for flexbox to calculate height correctly */
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #ffffffcc;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #007BFF;
+      box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    #loading {
+      margin-top: 100px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: gray;
     }
 
     @media (max-width: 600px) {
@@ -86,7 +114,7 @@
   </style>
 </head>
 <body>
-  <header>
+  <header style="display:none;">
     <div class="logo">SkillForGood</div>
     <div class="user-controls">
       <span id="userName">Hello, User</span>
@@ -94,9 +122,13 @@
     </div>
   </header>
 
-  <div id="content">
-    <!-- Dynamic content loaded here -->
-  </div>
+  <div id="loading">Checking authentication...</div>
+  <div id="content" style="display:none;"></div>
+
+  <footer style="display:none;">
+    <div><strong>&copy;</strong> <strong>SkillForGood</strong></div>
+    <div style="font-weight: normal;"><em>"Where learning begins, success follows."</em></div>
+  </footer>
 
   <!-- Firebase + Dynamic loader -->
   <script type="module">
@@ -119,19 +151,26 @@
     const userNameSpan = document.getElementById('userName');
     const logoutBtn = document.getElementById('logoutBtn');
     const contentDiv = document.getElementById('content');
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+    const loading = document.getElementById('loading');
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
         userNameSpan.textContent = `Hello, ${user.displayName || "User"}`;
-        loadPage('list.html'); // Load course list after login
+        header.style.display = 'flex';
+        footer.style.display = 'flex';
+        loading.style.display = 'none';
+        contentDiv.style.display = 'block';
+        loadPage('list.html');
       } else {
-        window.location.href = "index.html"; // Redirect if not logged in
+        window.location.replace("index.html"); // use replace to avoid back
       }
     });
 
     logoutBtn.addEventListener('click', () => {
       signOut(auth).then(() => {
-        window.location.href = "index.html";
+        window.location.replace("index.html"); // replace clears back history
       });
     });
 
