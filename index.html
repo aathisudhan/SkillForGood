@@ -32,11 +32,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(255, 255, 255, 1);
+      background: #fff;
       border-radius: 12px;
       padding: 30px 40px;
       color: #fff;
-      min-width: 300px;
       width: 90%;
       max-width: 400px;
     }
@@ -73,17 +72,16 @@
       width: 100%;
       padding: 12px;
       background-color: #007BFF;
-      color: #ffffff;
+      color: #fff;
       border: none;
       border-radius: 6px;
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     .form-container .switch {
-      color: #000000;
+      color: #000;
       font-weight: bold;
       text-align: center;
       margin-top: 15px;
@@ -100,12 +98,94 @@
     .hidden {
       display: none;
     }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px 30px;
+      border-radius: 12px;
+      max-width: 350px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: rgba(0, 123, 255, 0.2);
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .modal input::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+
+    .modal input:focus {
+      background-color: rgba(0, 123, 255, 0.3);
+      border: 1px solid #007BFF;
+    }
+
+    .modal button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007BFF;
+      cursor: pointer;
+    }
+
+    .reset-msg {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
   </style>
 
-  <!-- Firebase SDK v12 -->
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBmsQR4K7z50ViVnkodSp0Dgzu_Lz1zD7s",
@@ -121,11 +201,11 @@
     const auth = getAuth(app);
 
     window.toggleForms = function () {
-      const login = document.getElementById('loginForm');
-      const register = document.getElementById('registerForm');
-      login.classList.toggle('hidden');
-      register.classList.toggle('hidden');
-    }
+      document.getElementById('loginForm').classList.toggle('hidden');
+      document.getElementById('registerForm').classList.toggle('hidden');
+      document.getElementById('loginError').textContent = '';
+      document.getElementById('registerError').textContent = '';
+    };
 
     window.login = function () {
       const email = document.getElementById('loginEmail').value;
@@ -133,13 +213,12 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          alert("Login successful!");
           window.location.href = "home.html";
         })
         .catch(error => {
-          alert("Login failed: " + error.message);
+          document.getElementById('loginError').textContent = error.message;
         });
-    }
+    };
 
     window.register = function () {
       const name = document.getElementById('registerName').value;
@@ -148,7 +227,7 @@
       const confirmPassword = document.getElementById('confirmPassword').value;
 
       if (password !== confirmPassword) {
-        alert("Passwords do not match!");
+        document.getElementById('registerError').textContent = "Passwords do not match!";
         return;
       }
 
@@ -157,13 +236,47 @@
           return updateProfile(userCredential.user, { displayName: name });
         })
         .then(() => {
-          alert("Registration successful!");
           window.location.href = "home.html";
         })
         .catch(error => {
-          alert("Registration failed: " + error.message);
+          document.getElementById('registerError').textContent = error.message;
         });
-    }
+    };
+
+    window.showForgotPasswordModal = function () {
+      if (document.querySelector(".modal-overlay")) return;
+
+      const modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.innerHTML = `
+        <div class="modal">
+          <div class="close-btn" onclick="closeModal()">×</div>
+          <h3 style="color:#007BFF;">Reset Password</h3>
+          <input type="email" id="resetEmail" placeholder="Email" />
+          <button onclick="resetPassword()">Send Reset Link</button>
+          <div class="reset-msg" id="resetMsg"></div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    };
+
+    window.resetPassword = function () {
+      const email = document.getElementById('resetEmail').value;
+      const msgBox = document.getElementById('resetMsg');
+
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          msgBox.textContent = "Reset link has been sent to your email.";
+        })
+        .catch(error => {
+          msgBox.textContent = error.message;
+        });
+    };
+
+    window.closeModal = function () {
+      const modal = document.querySelector('.modal-overlay');
+      if (modal) modal.remove();
+    };
   </script>
 </head>
 
@@ -172,9 +285,13 @@
 
   <div class="form-container" id="loginForm">
     <h2>SkillForGood Login</h2>
-    <input type="email" id="loginEmail" placeholder="Email" required>
-    <input type="password" id="loginPassword" placeholder="Password" required>
+    <input type="email" id="loginEmail" placeholder="Email" required />
+    <input type="password" id="loginPassword" placeholder="Password" required />
+    <div style="text-align: right; margin-top: -10px; margin-bottom: 25px; font-weight: bold;">
+      <a onclick="showForgotPasswordModal()" style="font-size: 0.85rem; color: #007BFF; cursor: pointer; text-decoration: underline;">Reset Password</a>
+    </div>
     <button onclick="login()">Login</button>
+    <div class="error-message" id="loginError"></div>
     <div class="switch">
       Don't have an account? <a onclick="toggleForms()">Register Now</a>
     </div>
@@ -182,21 +299,20 @@
 
   <div class="form-container hidden" id="registerForm">
     <h2>SkillForGood Registration</h2>
-    <input type="text" id="registerName" placeholder="Full Name" required>
-    <input type="email" id="registerEmail" placeholder="Email" required>
-    <input type="password" id="registerPassword" placeholder="Password" required>
-    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    <input type="text" id="registerName" placeholder="Full Name" required />
+    <input type="email" id="registerEmail" placeholder="Email" required />
+    <input type="password" id="registerPassword" placeholder="Password" required />
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
     <button onclick="register()">Register</button>
+    <div class="error-message" id="registerError"></div>
     <div class="switch">
       Have an account? <a onclick="toggleForms()">Login Now</a>
     </div>
   </div>
 
   <script>
-    // Background Animation
     const canvas = document.getElementById("bg-canvas");
     const ctx = canvas.getContext("2d");
-
     let nodes = [];
 
     function resizeCanvas() {
@@ -218,10 +334,8 @@
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       for (let i = 0; i < nodes.length; i++) {
         let a = nodes[i];
-
         ctx.beginPath();
         ctx.arc(a.x, a.y, 3, 0, Math.PI * 2);
         ctx.shadowColor = '#ffffff';
@@ -250,11 +364,9 @@
 
         a.x += a.vx;
         a.y += a.vy;
-
         if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
         if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
       }
-
       requestAnimationFrame(draw);
     }
 
