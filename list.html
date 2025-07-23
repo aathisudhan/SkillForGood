@@ -1,0 +1,29 @@
+<style>
+  .course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .course-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-weight: bold;
+    color: #007BFF;
+    transition: background 0.2s;
+  }
+
+  .course-item:hover {
+    background: #eaf4ff;
+  }
+</style>
+
+<div class="course-list">
+  <div class="course-item" onclick="loadPage('python.html')">Python Programming</div>
+  <div class="course-item" onclick="loadPage('ml.html')">Machine Learning</div>
+  <div class="course-item" onclick="loadPage('ds.html')">Data Science</div>
+  <div class="course-item" onclick="loadPage('web.html')">Web Development</div>
+</div>
