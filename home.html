@@ -11,6 +11,17 @@
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f2f5;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -18,15 +29,15 @@
       top: 0;
       left: 0;
       right: 0;
+      height: 60px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.5rem;
+      padding: 0 1.5rem;
       background: #ffffffcc;
-      backdrop-filter: blur(10px);
       z-index: 1000;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      flex-wrap: wrap;
+      box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+      transition: opacity 0.3s ease;
     }
 
     .logo {
@@ -39,8 +50,6 @@
       display: flex;
       gap: 0.8rem;
       align-items: center;
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
     }
 
     .user-controls span {
@@ -74,26 +83,130 @@
       justify-content: center;
       font-size: 0.9rem;
       color: #007BFF;
-      box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 -5px 5px rgba(0,0,0,0.1);
       text-align: center;
+      transition: opacity 0.3s ease;
     }
 
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
+    main {
+      flex: 1;
+      overflow-y: auto;
+      margin-top: 60px;
+      margin-bottom: 60px;
+    }
+
+    .intro {
+      position: relative;
+      min-height: 80vh;
+      background-color: #007BFF;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    .intro h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .intro h2 {
+      font-size: 1.75rem;
+      font-weight: normal;
+      margin-bottom: 1rem;
+    }
+
+    .intro em {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #f0f8ff;
+      max-width: 600px;
+    }
+
+    .circle {
+      position: absolute;
+      bottom: -100px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: floatUp 10s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    #courses {
+      padding: 2rem;
+      background-color: #f8f9fa;
+    }
+
+    #courses h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 3rem;
+      max-width: 90%;
+      margin: auto;
+    }
+
+    .course-button {
+      display: block;
+      width: 100%;
+      height: 50px;
+      text-align: center;
+      padding: 1rem;
+      background-color: #ffcccc;
+      color: darkred;
+      border: 2px solid darkred;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .course-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 4px 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .intro h1 {
+        font-size: 2.25rem;
       }
 
-      .user-controls {
-        margin-top: 10px;
-        justify-content: space-between;
-        width: 100%;
+      .intro h2 {
+        font-size: 1.25rem;
+      }
+
+      .intro em {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <header style="display:none;">
+  <header class="hidden">
     <div class="logo">SkillForGood</div>
     <div class="user-controls">
       <span id="userName">Hello, User</span>
@@ -101,11 +214,48 @@
     </div>
   </header>
 
-  <footer style="display:none;">
-    <div><strong>&copy;</strong> <strong>SkillForGood</strong></div>
-    <div style="font-weight: normal;"><em>"Where learning begins, success follows."</em></div>
+  <main>
+    <section class="intro">
+      <h1>Student-Built Website</h1>
+      <h2>By AATHISUDHAN A</h2>
+      <em>"To provide Free Quality Education for all learners around the world."</em>
+    </section>
+
+    <section id="courses">
+      <h2>AVAILABLE COURSES</h2>
+      <div class="course-grid">
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+        <a href="course/prompengg.html" class="course-button">PROMPT ENGINEERING</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="hidden">
+    <div><strong>&copy; SkillForGood</strong></div>
+    <div><em>"Where learning begins, success follows."</em></div>
   </footer>
 
+  <script>
+    // Bubble animation
+    for (let i = 0; i < 25; i++) {
+      const circle = document.createElement('div');
+      const size = Math.random() * 40 + 10;
+      circle.classList.add('circle');
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+      circle.style.left = `${Math.random() * 100}%`;
+      circle.style.animationDuration = `${6 + Math.random() * 4}s`;
+      circle.style.opacity = `${0.1 + Math.random() * 0.2}`;
+      document.querySelector('.intro').appendChild(circle);
+    }
+  </script>
+
+  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
@@ -131,8 +281,8 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         userNameSpan.textContent = `Hello, ${user.displayName || "User"}`;
-        header.style.display = 'flex';
-        footer.style.display = 'flex';
+        header.classList.remove('hidden');
+        footer.classList.remove('hidden');
       } else {
         window.location.replace("index.html");
       }
