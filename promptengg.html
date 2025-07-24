@@ -130,6 +130,31 @@
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
     }
+    
   </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBmsQR4K7z50ViVnkodSp0Dgzu_Lz1zD7s",
+    authDomain: "skillforgood-as.firebaseapp.com",
+    projectId: "skillforgood-as",
+    storageBucket: "skillforgood-as.appspot.com",
+    messagingSenderId: "794871452629",
+    appId: "1:794871452629:web:4a421ca4cdd5a7ec32a35c",
+    measurementId: "G-7H7LM02D54"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+    }
+  });
+</script>
+
 </body>
 </html>
