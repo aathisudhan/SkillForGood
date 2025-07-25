@@ -21,6 +21,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Default load
   showModule("intro");
 });
