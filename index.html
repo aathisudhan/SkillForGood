@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SkillForGood - Login/Register</title>
+  <title>SkillForGood</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/png" />
+  <meta property="og:title" content="SkillForGood" />
+    <meta property="og:description" content="Free Education" />
+    <meta property="og:image" content="https://skillforgood.pages.dev/assets/thumbnail.png" />
+    <meta property="og:url" content="https://skillforgood.pages.dev/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:image" content="https://skillforgood.pages.dev/assets/thumbnail.png" />
   <style>
     html, body {
       margin: 0;
@@ -36,31 +43,34 @@
       border-radius: 12px;
       padding: 30px 40px;
       color: #fff;
-      width: 90%;
-      max-width: 400px;
+      max-width: 440px;
+      z-index: 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+
     }
 
     .form-container h2 {
       text-align: center;
       margin-bottom: 25px;
-      font-size: 1.6rem;
+      font-size: 25px;
       color: #007BFF;
     }
 
     .form-container input {
       width: 100%;
-      padding: 12px;
+      padding: 15px;
       margin-bottom: 15px;
       border: none;
       border-radius: 6px;
       background-color: rgba(0, 123, 255, 0.2);
-      color: rgba(0, 0, 0, 0.9);
-      font-size: 1rem;
+      color: rgba(0, 0, 0, 1);
+      font-size: 15px;
       outline: none;
     }
 
     .form-container input::placeholder {
-      color: rgba(0, 0, 0, 0.3);
+      color: rgba(0, 0, 0, 0.2);
+      font-weight: bold;
     }
 
     .form-container input:focus {
@@ -70,12 +80,12 @@
 
     .form-container button {
       width: 100%;
-      padding: 12px;
+      padding: 15px;
       background-color: #007BFF;
       color: #fff;
       border: none;
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -85,12 +95,11 @@
       font-weight: bold;
       text-align: center;
       margin-top: 15px;
-      font-size: 0.9rem;
+      font-size: 15px;
     }
 
     .form-container .switch a {
       color: #007BFF;
-      font-weight: bold;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -103,7 +112,7 @@
       color: red;
       text-align: center;
       margin-top: 10px;
-      font-size: 0.9rem;
+      font-size: 15px;
     }
 
     /* Modal overlay */
@@ -114,21 +123,25 @@
       width: 100vw;
       height: 100vh;
       background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(2px);
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 100;
+      z-index: 1;
     }
 
     .modal {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 25px 30px;
+      background: #fff;
+      padding: 20px 30px;
       border-radius: 12px;
-      max-width: 350px;
-      width: 90%;
+      max-width: 330px;
       text-align: center;
       position: relative;
+    }
+
+    .modal h3 {
+      color: #007BFF;
+      font-size: 20px;
     }
 
     .modal input {
@@ -138,13 +151,14 @@
       border: none;
       border-radius: 6px;
       background-color: rgba(0, 123, 255, 0.2);
-      color: rgba(0, 0, 0, 0.9);
-      font-size: 1rem;
+      color: rgba(0, 0, 0, 1);
+      font-size: 15px;
       outline: none;
     }
 
     .modal input::placeholder {
-      color: rgba(0, 0, 0, 0.3);
+      color: rgba(0, 0, 0, 0.2);
+      font-weight: bold;
     }
 
     .modal input:focus {
@@ -160,7 +174,7 @@
       color: #fff;
       border: none;
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -168,7 +182,7 @@
     .modal .close-btn {
       position: absolute;
       top: 8px;
-      right: 12px;
+      right: 15px;
       font-size: 1.5rem;
       font-weight: bold;
       color: #007BFF;
@@ -177,14 +191,82 @@
 
     .reset-msg {
       color: red;
-      font-size: 0.9rem;
+      font-size: 15px;
       margin-top: 10px;
     }
+    .reset-password {
+  text-align: right;
+  margin-bottom: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #007BFF;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+    @media (max-width: 768px) {
+  .form-container {
+    min-width: 340px;
+    padding: 20px 30px;
+  }
+  .form-container h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+  .form-container input {
+      padding: 13px;
+      margin-bottom: 13px;
+      font-size: 13px;
+  }
+  .form-container button {
+      padding: 13px;
+      font-size: 15px;
+    }
+    .form-container .switch {
+      margin-top: 13px;
+      font-size: 13px;
+    }
+    .reset-password {
+      margin-bottom: 13px;
+      font-size: 13px;
+    }
+    .error-message {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .modal {
+      background: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      min-width: 230px;
+      max-width: 260px;
+    }
+
+    .modal input {
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .modal button {
+      padding: 10px;
+      margin-top: 13px;
+      font-size: 15px;
+    }
+    .modal h3 {
+      font-size: 18px;
+    }
+    .reset-msg {
+      color: red;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+}
   </style>
 
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, sendEmailVerification, signOut} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
     
     const firebaseConfig = {
@@ -200,6 +282,81 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+            document.addEventListener("DOMContentLoaded", () => {
+  const emailInput = document.getElementById('registerEmail');
+  const passwordInput = document.getElementById('registerPassword');
+  const confirmPasswordInput = document.getElementById('confirmPassword');
+  const displayNameInput = document.getElementById('registerName');
+  const registerButton = document.getElementById('registerButton');
+  const errorMessage = document.getElementById('registerError');
+
+  registerButton.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    const confirmPassword = confirmPasswordInput.value.trim();
+    const displayName = displayNameInput.value.trim();
+
+    errorMessage.textContent = ''; // Clear previous errors
+
+    registerButton.disabled = true;
+    registerButton.textContent = "Registering...";
+
+    if (!email || !password || !displayName || !confirmPassword) {
+      errorMessage.textContent = "Fill Empty Fields!";
+      registerButton.disabled = false;
+      registerButton.textContent = "Register";
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      errorMessage.textContent = "Passwords do not match!";
+      registerButton.disabled = false;
+      registerButton.textContent = "Register";
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      await updateProfile(user, { displayName });
+
+      // Send verification email
+      await sendEmailVerification(user);
+
+      // Optional: sign out user until they verify
+      await signOut(auth);
+      errorMessage.textContent = "Verification Link Sent";
+
+    } catch (error) {
+      switch (error.code) {
+        case "auth/invalid-email":
+          errorMessage.textContent = "Invalid Email Format";
+          registerButton.disabled = false;
+          registerButton.textContent = "Register";
+          break;
+        case "auth/email-already-in-use":
+          errorMessage.textContent = "Email Already Registered";
+          registerButton.disabled = false;
+          registerButton.textContent = "Register";
+          break;
+        case "auth/weak-password":
+          errorMessage.textContent = "Weak Password";
+          registerButton.disabled = false;
+          registerButton.textContent = "Register";
+          break;
+        default:
+          errorMessage.textContent = error.message;
+          registerButton.disabled = false;
+          registerButton.textContent = "Register";
+      }
+    }
+    registerButton.disabled = false;
+    registerButton.textContent = "Register";
+  });
+});
+
+
     window.toggleForms = function () {
       document.getElementById('loginForm').classList.toggle('hidden');
       document.getElementById('registerForm').classList.toggle('hidden');
@@ -208,40 +365,53 @@
     };
 
     window.login = function () {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  const errorBox = document.getElementById('loginError');
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          window.location.replace("home.html");
-        })
-        .catch(error => {
-          document.getElementById('loginError').textContent = error.message;
-        });
-    };
+  // Reset error message
+  errorBox.textContent = '';
 
-    window.register = function () {
-      const name = document.getElementById('registerName').value;
-      const email = document.getElementById('registerEmail').value;
-      const password = document.getElementById('registerPassword').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
+  // Client-side validations
+  if (!email && !password) {
+    errorBox.textContent = "Fill Empty Fields!";
+    return;
+  }
+  if (!email) {
+    errorBox.textContent = "Enter Email";
+    return;
+  }
+  if (!password) {
+    errorBox.textContent = "Enter Password";
+    return;
+  }
 
-      if (password !== confirmPassword) {
-        document.getElementById('registerError').textContent = "Passwords do not match!";
+  // Firebase login
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      if (!user.emailVerified) {
+        signOut(auth);  // force logout if not verified
+        errorBox.textContent = "Verify Email";
         return;
       }
+      window.location.replace("home.html");
+    })
+    .catch(error => {
+      switch (error.code) {
+        case "auth/invalid-credential":
+          errorBox.textContent = "Incorrect Email/Password";
+          break;
+        case "auth/invalid-email":
+          errorBox.textContent = "Invalid Email Format";
+          break;
+        default:
+          errorBox.textContent = error.message;
+      }
+    });
+};
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          return updateProfile(userCredential.user, { displayName: name });
-        })
-        .then(() => {
-          window.location.replace("home.html");
-        })
-        .catch(error => {
-          document.getElementById('registerError').textContent = error.message;
-        });
-    };
+
 
     window.showForgotPasswordModal = function () {
       if (document.querySelector(".modal-overlay")) return;
@@ -251,7 +421,7 @@
       modal.innerHTML = `
         <div class="modal">
           <div class="close-btn" onclick="closeModal()">×</div>
-          <h3 style="color:#007BFF;">Reset Password</h3>
+          <h3>Reset Password</h3>
           <input type="email" id="resetEmail" placeholder="Email" />
           <button onclick="resetPassword()">Send Reset Link</button>
           <div class="reset-msg" id="resetMsg"></div>
@@ -263,10 +433,16 @@
     window.resetPassword = function () {
       const email = document.getElementById('resetEmail').value;
       const msgBox = document.getElementById('resetMsg');
+      
+      msgBox.textContent = ''; // clear old message
 
+  if (!email) {
+    msgBox.textContent = 'Enter Email';
+    return;
+  }
       sendPasswordResetEmail(auth, email)
         .then(() => {
-          msgBox.textContent = "Reset link has been sent to your email.";
+          msgBox.textContent = "Reset Link Sent to Email";
         })
         .catch(error => {
           msgBox.textContent = error.message;
@@ -278,11 +454,6 @@
       if (modal) modal.remove();
     };
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.replace("home.html");
-      }
-    });
   </script>
 </head>
 
@@ -293,10 +464,10 @@
     <h2>SkillForGood Login</h2>
     <input type="email" id="loginEmail" placeholder="Email" required />
     <input type="password" id="loginPassword" placeholder="Password" required />
-    <div style="text-align: right; margin-top: -10px; margin-bottom: 25px; font-weight: bold;">
-      <a onclick="showForgotPasswordModal()" style="font-size: 0.85rem; color: #007BFF; cursor: pointer; text-decoration: underline;">Reset Password</a>
-    </div>
-    <button onclick="login()">Login</button>
+<div class="reset-password">
+  <a onclick="showForgotPasswordModal()">Forgot Password</a>
+</div>
+    <button onclick="login()" type="button">Login</button>
     <div class="error-message" id="loginError"></div>
     <div class="switch">
       Don't have an account? <a onclick="toggleForms()">Register Now</a>
@@ -309,7 +480,7 @@
     <input type="email" id="registerEmail" placeholder="Email" required />
     <input type="password" id="registerPassword" placeholder="Password" required />
     <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-    <button onclick="register()">Register</button>
+    <button id="registerButton">Register</button>
     <div class="error-message" id="registerError"></div>
     <div class="switch">
       Have an account? <a onclick="toggleForms()">Login Now</a>
@@ -399,6 +570,5 @@
   createNodes();
   draw();
 </script>
-
 </body>
 </html>
