@@ -282,6 +282,13 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    onAuthStateChanged(auth, (user) => {
+  if (user && user.emailVerified) {
+    loginButton.disabled = true;
+    loginButton.textContent = "Logging In...";
+    window.location.replace("home.html");
+  }
+});
             document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById('registerEmail');
   const passwordInput = document.getElementById('registerPassword');
@@ -372,17 +379,26 @@
   // Reset error message
   errorBox.textContent = '';
 
+  loginButton.disabled = true;
+  loginButton.textContent = "Logging In...";
+
   // Client-side validations
   if (!email && !password) {
     errorBox.textContent = "Fill Empty Fields!";
+    loginButton.disabled = false;
+      loginButton.textContent = "Login";
     return;
   }
   if (!email) {
     errorBox.textContent = "Enter Email";
+    loginButton.disabled = false;
+      loginButton.textContent = "Login";
     return;
   }
   if (!password) {
     errorBox.textContent = "Enter Password";
+    loginButton.disabled = false;
+      loginButton.textContent = "Login";
     return;
   }
 
@@ -393,6 +409,8 @@
       if (!user.emailVerified) {
         signOut(auth);  // force logout if not verified
         errorBox.textContent = "Verify Email";
+        loginButton.disabled = false;
+        loginButton.textContent = "Login";
         return;
       }
       window.location.replace("home.html");
@@ -401,12 +419,18 @@
       switch (error.code) {
         case "auth/invalid-credential":
           errorBox.textContent = "Incorrect Email/Password";
+          loginButton.disabled = false;
+          loginButton.textContent = "Login";
           break;
         case "auth/invalid-email":
           errorBox.textContent = "Invalid Email Format";
+          loginButton.disabled = false;
+          loginButton.textContent = "Login";
           break;
         default:
           errorBox.textContent = error.message;
+          loginButton.disabled = false;
+          loginButton.textContent = "Login";
       }
     });
 };
@@ -467,10 +491,10 @@
 <div class="reset-password">
   <a onclick="showForgotPasswordModal()">Forgot Password</a>
 </div>
-    <button onclick="login()" type="button">Login</button>
+    <button onclick="login()" type="button" id="loginButton">Login</button>
     <div class="error-message" id="loginError"></div>
     <div class="switch">
-      Don't have an account? <a onclick="toggleForms()">Register Now</a>
+      Don't have an Account? <a onclick="toggleForms()">Register Now</a>
     </div>
   </div>
 
@@ -483,7 +507,7 @@
     <button id="registerButton">Register</button>
     <div class="error-message" id="registerError"></div>
     <div class="switch">
-      Have an account? <a onclick="toggleForms()">Login Now</a>
+      Have an Account? <a onclick="toggleForms()">Login Now</a>
     </div>
   </div>
 
