@@ -3,304 +3,519 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SkillForGood - Home</title>
+  <title>Home - SkillForGood</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/png" />
   <style>
-    html, body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f2f5;
-      overflow-x: hidden;
-      overflow-y: auto;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
+    body, html {
+      height: 100%;
+      background-color: #fff;
+      color: #000000;
     }
 
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
+      height: 10vh;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      padding: 0 1.5rem;
-      background: #ffffffcc;
-      z-index: 1000;
-      box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-      transition: opacity 0.3s ease;
+      background-color: #000000e0;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      gap: 15px;
+      z-index: 1;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #007BFF;
-    }
-
-    .user-controls {
-      display: flex;
-      gap: 0.8rem;
-      align-items: center;
-    }
-
-    .user-controls span {
-      font-weight: 600;
-      color: #007BFF;
-      font-size: 1rem;
-      white-space: nowrap;
-    }
-
-    .user-controls button {
-      padding: 8px 12px;
-      background-color: #e74c3c;
-      border: none;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background-color: #ffffffcc;
-      backdrop-filter: blur(10px);
+    .menu-icon {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: #007BFF;
-      box-shadow: 0 -5px 5px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: opacity 0.3s ease;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      cursor: pointer;
+      margin-left: 30px;
+      margin-right: 15px;
+      z-index: 1;
     }
+
+    .menu-icon div {
+      height: 3px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 2px;
+    }
+
+    .menu-container {
+      position: relative;
+    }
+
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 29px;
+      left: 0;
+      margin-top: 15px;
+      background-color: #000000d0;
+      border: none;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      z-index: 10;
+      min-width: 250px;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .menu-dropdown div {
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    .menu-dropdown div:last-child {
+      border-bottom: none;
+    }
+
+    .menu-dropdown div:hover {
+      background-color: #f0f0f0;
+      color: #000000e0;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-button {
+      background: none;
+      border: none;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      color: #33ff00;
+      font-family: inherit;
+    }
+
+    .logo-button:focus {
+      outline: none;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-right button {
+      background-color: red;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      margin-right: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+
+    @media (max-width: 768px) {
+      .menu-icon {
+      width: 20px;
+      height: 15px;
+      margin-left: 25px;
+    }
+
+    .menu-icon div {
+      height: 2px;
+    }
+
+    .menu-dropdown {
+      top: 26px;
+      min-width: 200px;
+    }
+
+    .menu-dropdown div {
+      font-size: 15px;
+    }
+
+    .logo-button {
+      font-size: 25px;
+    }
+
+    .header-right button {
+      font-size: 15px;
+      margin-right: 25px;
+    }
+}
 
     main {
-      flex: 1;
-      overflow-y: auto;
-      margin-top: 60px;
-      margin-bottom: 60px;
-    }
-
-    .intro {
-      position: relative;
       min-height: 80vh;
-      background-color: #007BFF;
-      color: white;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 2rem;
-      overflow: hidden;
+      padding: 20px;
+      flex-direction: column;
+      transition: all 0.3s ease;
     }
 
-    .intro h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
+    #introContent h2 {
+      font-size: 50px;
+      animation: fadeInUp 1s ease-out forwards;
     }
 
-    .intro h2 {
-      font-size: 1.75rem;
-      font-weight: normal;
-      margin-bottom: 1rem;
+    #introContent p {
+      font-size: 25px;
+      margin-top: 15px;
+      animation: fadeInUp 1.5s ease-out forwards;
     }
 
-    .intro em {
-      font-size: 1.2rem;
-      font-style: italic;
-      color: #f0f8ff;
-      max-width: 600px;
+    #exploreBtn {
+      margin-top: 25px;
+      padding: 10px 20px;
+      font-size: 25px;
+      font-weight: bold;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      animation: fadeInUp 2s ease-out forwards;
+      border: 2px solid #000000;
     }
 
-    .circle {
-      position: absolute;
-      bottom: -100px;
-      background-color: white;
-      border-radius: 50%;
-      opacity: 0.2;
-      animation: floatUp 10s linear infinite;
-      z-index: 0;
-    }
-
-    @keyframes floatUp {
+    @keyframes fadeInUp {
       0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.3;
+        opacity: 0;
+        transform: translateY(40px);
       }
       100% {
-        transform: translateY(-120vh) scale(1.2);
-        opacity: 0;
+        opacity: 1;
+        transform: translateY(0);
       }
-    }
-
-    #courses {
-      padding: 2rem;
-      background-color: #f8f9fa;
-    }
-
-    #courses h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      color: #333;
-    }
-
-    .course-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 3rem;
-      max-width: 90%;
-      margin: auto;
-    }
-
-    .course-button {
-      display: block;
-      width: 100%;
-      height: 50px;
-      text-align: center;
-      padding: 1rem;
-      background-color: #ffcccc;
-      color: darkred;
-      border: 2px solid darkred;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .course-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 4px 6px 16px rgba(0, 0, 0, 0.4);
     }
 
     @media (max-width: 768px) {
-      .intro h1 {
-        font-size: 2.25rem;
-      }
-
-      .intro h2 {
-        font-size: 1.25rem;
-      }
-
-      .intro em {
-        font-size: 1rem;
-      }
-      .course-button {
-        font-size: 0.85rem;
-        padding: 0.5rem;
-        height: 40px;
-        border-radius: 8px;
-      }
-
-      .course-grid {
-        gap: 1.5rem;
-      }
+    #introContent h2 {
+      font-size: 35px;
     }
+
+    #introContent p {
+      font-size: 15px;
+    }
+
+    #exploreBtn {
+      font-size: 20px;
+    }
+
+    }
+    .course-card h3 {
+      margin-bottom: 5px;
+    }
+
+    footer {
+      height: 10vh;
+      background-color: #000000e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      font-weight: bold;
+      box-shadow: 0 -10px 15px rgba(0,0,0,0.3);
+    }
+
+#courseSearchSection {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  height: 74vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+#searchInput {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #000000e0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background: #007BFF;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+#searchInput::placeholder{
+  color: #fff;
+}
+
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  padding-bottom: 30px;
+  box-sizing: border-box;
+}
+
+.course-card {
+  cursor: pointer;
+  padding: 16px;
+  border: 1px solid #000000e0;
+  border-left: 6px solid #000000e0;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s;
+  font-size: 16px;
+}
+
+.course-card:hover {
+  background-color: #f0fff1;
+}
+
+
+  @media (max-width: 768px) {
+  .course-list {
+    grid-template-columns: 1fr;
+  }
+
+#searchInput {
+  width: 80%;
+  font-size: 13px;
+
+}
+
+.course-card {
+  font-size: 13px;
+}
+
+    }
+
+    
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(3px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal {
+      background: white;
+      color: black;
+      border-radius: 12px;
+      padding: 25px 30px;
+      width: 500px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .modal h2 {
+      margin-bottom: 15px;
+      color: #007BFF;
+    }
+
+    .modal p {
+      margin: 10px 0;
+    }
+
+    .modal button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .modal .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007BFF;
+      cursor: pointer;
+    }
+
+
   </style>
 </head>
 <body>
-  <header class="hidden">
-    <div class="logo">SkillForGood</div>
-    <div class="user-controls">
-      <span id="userName">Hello, User</span>
-      <button id="logoutBtn">Logout</button>
-    </div>
-  </header>
 
-  <main>
-    <section class="intro">
-      <h1>Student-Built Website</h1>
-      <h2>By AATHISUDHAN A</h2>
-      <em>"To provide Free Quality Education for all learners around the world."</em>
-    </section>
-
-    <section id="courses">
-      <h2>AVAILABLE COURSES</h2>
-      <div class="course-grid">
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
-        <a href="courses/promptengg.html" class="course-button">PROMPT ENGINEERING</a>
+<header>
+  <div class="header-left">
+    <div class="menu-container">
+      <div class="menu-icon" onclick="toggleMenuDropdown()">
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
-    </section>
-  </main>
+      <div id="menuDropdown" class="menu-dropdown">
+        <div onclick="showSettingsModal()">Profile</div>
+        <div onclick="logout()">Log Out</div>
+      </div>
+    </div>
+    <button class="logo-button" onclick="location.reload()">SkillForGood</button>
+  </div>
 
-  <footer class="hidden">
-    <div><strong>&copy; SkillForGood</strong></div>
-    <div><em>"Where learning begins, success follows."</em></div>
-  </footer>
+  <div class="header-right">
+    <button onclick="logout()">Log Out</button>
+  </div>
+</header>
 
-  <script>
-    for (let i = 0; i < 25; i++) {
-      const circle = document.createElement('div');
-      const size = Math.random() * 40 + 10;
-      circle.classList.add('circle');
-      circle.style.width = `${size}px`;
-      circle.style.height = `${size}px`;
-      circle.style.left = `${Math.random() * 100}%`;
-      circle.style.animationDuration = `${6 + Math.random() * 4}s`;
-      circle.style.opacity = `${0.1 + Math.random() * 0.2}`;
-      document.querySelector('.intro').appendChild(circle);
+<main>
+  <div id="introContent">
+    <h2>Student-Built Platform</h2>
+    <p>By <strong>AATHISUDHAN A</strong> & <strong>MADESHWARAN M</strong></p>
+    <p><em>"To provide Free Quality Education for all learners around the world."</em></p>
+    <button id="exploreBtn" onclick="showCourses()">EXPLORE COURSES</button>
+  </div>
+
+  <div id="courseSearchSection">
+    <input type="text" id="searchInput" placeholder="Search Courses..." oninput="filterCourses()"/>
+    <div class="course-list" id="courseList">
+      <div class="course-card" onclick="location.href='promptengg.html'">
+  <h3>Introduction to Prompt Engineering</h3>
+  <p>Learn the Basics of  Prompt Engineering.</p>
+</div>
+      <div class="course-card" onclick="location.href='promptengg.html'">
+  <h3>Introduction to Prompt Engineering</h3>
+  <p>Learn the Basics of  Prompt Engineering.</p>
+</div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© SkillForGood - <em>"Where learning begins, success follows."</em></p>
+
+</footer>
+
+<div id="settingsModal" class="modal-overlay" style="display: none;">
+  <div class="modal">
+    <div class="close-btn" onclick="closeSettingsModal()">×</div>
+    <h2>PROFILE</h2>
+    <p><strong>NAME     :</strong> <span id="profileName">Loading...</span></p>
+    <p><strong>ACCOUNT  :</strong> <span id="profileEmail">Loading...</span></p>
+    <p><strong>PASSWORD :</strong> ******</p>
+    <button onclick="sendPasswordReset()">Reset Password</button>
+  </div>
+</div>
+
+<script>
+  function toggleMenuDropdown() {
+    const dropdown = document.getElementById('menuDropdown');
+    const isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
+  }
+
+  document.addEventListener('click', function (event) {
+    const menu = document.querySelector('.menu-container');
+    const dropdown = document.getElementById('menuDropdown');
+    if (!menu.contains(event.target)) {
+      dropdown.style.display = 'none';
     }
-  </script>
+  });
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  function showCourses() {
+    document.getElementById('introContent').style.display = 'none';
+    document.getElementById('courseSearchSection').style.display = 'flex';
+  }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBmsQR4K7z50ViVnkodSp0Dgzu_Lz1zD7s",
-      authDomain: "skillforgood-as.firebaseapp.com",
-      projectId: "skillforgood-as",
-      storageBucket: "skillforgood-as.appspot.com",
-      messagingSenderId: "794871452629",
-      appId: "1:794871452629:web:4a421ca4cdd5a7ec32a35c",
-      measurementId: "G-7H7LM02D54"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const userNameSpan = document.getElementById('userName');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const header = document.querySelector('header');
-    const footer = document.querySelector('footer');
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        userNameSpan.textContent = `Hello, ${user.displayName || "User"}`;
-        header.classList.remove('hidden');
-        footer.classList.remove('hidden');
-      } else {
-        window.location.replace("index.html");
-      }
+  function filterCourses() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.course-card');
+    cards.forEach(card => {
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      card.style.display = title.includes(input) ? 'block' : 'none';
     });
+  }
+</script>
 
-    logoutBtn.addEventListener('click', () => {
-      signOut(auth).then(() => {
-        window.location.replace("index.html");
-      });
+<script type="module">
+  import { getAuth, onAuthStateChanged, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBmsQR4K7z50ViVnkodSp0Dgzu_Lz1zD7s",
+    authDomain: "skillforgood-as.firebaseapp.com",
+    projectId: "skillforgood-as",
+    storageBucket: "skillforgood-as.appspot.com",
+    messagingSenderId: "794871452629",
+    appId: "1:794871452629:web:4a421ca4cdd5a7ec32a35c",
+    measurementId: "G-7H7LM02D54"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  function showSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'flex';
+  }
+
+  function closeSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'none';
+  }
+
+  function logout() {
+    signOut(auth).then(() => {
+      window.location.replace("index.html");
     });
-  </script>
+  }
+
+  function sendPasswordReset() {
+    const user = auth.currentUser;
+    if (user && user.email) {
+      sendPasswordResetEmail(auth, user.email)
+        .then(() => alert("Reset Link sent to Email"))
+        .catch((err) => alert(err.message));
+    }
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.replace("index.html");
+    } else {
+      document.getElementById('profileName').textContent = user.displayName || "Not Set";
+      document.getElementById('profileEmail').textContent = user.email;
+    }
+  });
+
+  window.showSettingsModal = showSettingsModal;
+  window.closeSettingsModal = closeSettingsModal;
+  window.logout = logout;
+  window.sendPasswordReset = sendPasswordReset;
+</script>
+
 </body>
 </html>
